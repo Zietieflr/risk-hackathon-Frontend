@@ -23,12 +23,12 @@ class UserForm extends Component {
     return(
       <section className='user-forms'>
         <form onSubmit={event => this.handleSubmit(event)}>
-          Who are you?
+          Who are you?&nbsp;&nbsp;
           <input onChange={event => this.handleTyping(event)} name='username' placeholder='Username' />
           <input type='submit' value='Sign In' />
         </form>
         <form onSubmit={event => this.handleNewUser(event)}>
-          New here? 
+          New here?&nbsp;&nbsp; 
           <input onChange={event => this.handleTyping(event)} name='username' placeholder='New Username' />
           <input type='submit' value='New User' />
         </form>
