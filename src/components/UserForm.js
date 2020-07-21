@@ -11,12 +11,12 @@ class UserForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('UserForm handleSubmit', event.target)
+    this.props.signIn(this.state.username)
   }
 
   handleNewUser = (event) => {
     event.preventDefault()
-    console.log('UserForm handleNewUser', event.target)
+    this.props.newUser(this.state.username)
   }
   
   render() {

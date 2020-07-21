@@ -4,9 +4,8 @@ import RiskForm from './components/RiskForm'
 import './App.css';
 
 const url = {
-  users: 'http://localhost:3000/users/',
-  user: 'http://localhost:3000/users/',
-  activities: 'http://localhost:3000/activities/',
+  users: 'http://localhost:3000/users',
+  activities: 'http://localhost:3000/actions',
 }
 
 class App extends Component {
@@ -14,16 +13,22 @@ class App extends Component {
   state = {
     riskActivities: [],
     user: null, 
+    users: [],
   }
 
   componentDidMount() {
-    // fetch(url.activities)
-    //   .then(response => response.json())
-    //   .then(results => this.setState({riskActivities: results}))
+    fetch(url.activities)
+      .then(response => response.json())
+      .then(results => this.setState({riskActivities: results}))
+
+    fetch(url.users)
+      .then(response => response.json())
+      .then(results => this.setState({users: results}))
   }
 
-  signIn = () => {
-    fetch(url.user)
+  signIn = (username) => {
+    const user = this.state.users.find(user => user.name === username)
+    fetch(`${url.users}/${user.id}`)
       .then(response => response.json())
       .then(result => this.setState({user: result}))
   }
@@ -38,17 +43,17 @@ class App extends Component {
       <div className="App">
         <h1>At Risk?</h1>
         {this.state.user ? null : <UserForm signIn={this.signIn} newUser={this.newUser} />}
-        <RiskForm />
+        <RiskForm riskActivities={this.state.riskActivities}/>
       </div>
     );
   }
 }
 
 function boilerplateFetch(url, method, body) {
-  fetch(url, {
+  return fetch(url, {
     method: method,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(body)
   })

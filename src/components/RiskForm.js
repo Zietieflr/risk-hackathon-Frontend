@@ -4,7 +4,6 @@ import RiskActivities from './RiskActivities'
 class RiskForm extends Component {
   state = {
     riskLevel: '',
-    activities: [{}],
   }
 
   handleChange = (event) => {
@@ -12,28 +11,40 @@ class RiskForm extends Component {
   } 
 
   activityOptions = (riskLevel) => {
-    this.state.activities.filter(activity => activity.risk_level === riskLevel)
-    return this.state.activities.map(activity => {
+    const filtered = this.props.riskActivities.filter(activity => activity.risk_level === riskLevel)
+    return filtered.map(activity => {
       return <RiskActivities key={activity.id} activity={activity} />
     })
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault()
+    console.log('RiskForm', event.target)
+    // this.average()
+  }
+
   render(){
     return (
-      <form className='risk-form'>
+      <form className='risk-form'  onSubmit={(event) => this.handleSubmit(event)}>
         <select onChange={event => this.handleChange(event)} name='risk' id='risk-select'>
           <option value=''>Please Select a Risk Level</option>
-          <option value='Low'>Low</option>
+          <option value='Low Risk'>Low</option>
           <option value='Low-Moderate'>Low-Moderate</option>
-          <option value='Moderate'>Moderate</option>
+          <option value='Moderate Risk'>Moderate</option>
           <option value='High-Moderate'>High-Moderate</option>
-          <option value='High'>High</option>
+          <option value='High Risk'>High</option>
         </select> 
         {
           this.state.riskLevel === '' 
             ? null 
-            : <select>{this.activityOptions(this.state.riskLevel)}</select>
+            : <select>{this.activityOptions(this.state.riskLevel)}</select> 
         } 
+        {
+          this.state.riskLevel === '' 
+          ? null 
+          : <input type='submit' value='Submit' />
+        }
+        
       </form>
     )
   }

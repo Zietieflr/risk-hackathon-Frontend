@@ -1,8 +1,8 @@
 import React from 'react'
 
-function RiskActivities({ activity }) {
+function RiskActivities(props) {
   return (
-    <option value={activity.numerical_risk}>{activity.name}</option>
+    <option value={props.activity.numerical_level}>{props.activity.activity}</option>
   )
 }
 
